@@ -32,4 +32,9 @@ public class ScoreManager : MonoBehaviour
     public void ResetPoint(){
         score = 0;
     }
+
+    public void RemovePoints(int points)
+    {
+        score -= points;
+    }
 }

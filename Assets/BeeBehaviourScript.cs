@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ScoreManager;
 
 public class BeeBehaviourScript : MonoBehaviour
 {
@@ -12,12 +11,18 @@ public class BeeBehaviourScript : MonoBehaviour
     private const float MOVEMENT_SPEED = 0.05f;
 
     private const int PENALTY = 2;
+
+    private const int COOLDOWN = 3;
     
     // private Rigidbody _rigidbody;
     
     private Transform _transform;
 
     private Vector3 _origin;
+
+    private bool _cooldown = false;
+
+    private Collision _colliding = null;
     
     // Start is called before the first frame update
     void Start()
@@ -58,15 +63,34 @@ public class BeeBehaviourScript : MonoBehaviour
             _transform.rotation = Quaternion.LookRotation(direction);
             _transform.position += direction * MOVEMENT_SPEED;
         }
+
+        if (_colliding != null && !_cooldown)
+        {
+            ScoreManager.instance.RemovePoints(PENALTY);
+            _cooldown = true;
+            StartCoroutine(Cooldown(COOLDOWN));
+        }
     }
 
+    private IEnumerator Cooldown(int secs)
+    {
+        yield return new WaitForSeconds(secs);
+        _cooldown = false;
+    }
+    
     private void OnCollisionEnter(Collision collision)
     {
-        if (isPlayerCollider(collision.collider))
+        if (isPlayerCollider(collision.collider) && !_cooldown)
         {
-            // TODO: Score deduction
-            ScoreManager.instance.RemovePoints(PENALTY);
-            Destroy(this.gameObject);
+            _colliding = collision;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision == _colliding)
+        {
+            _colliding = null;
         }
     }
 }

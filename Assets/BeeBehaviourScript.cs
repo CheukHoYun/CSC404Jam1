@@ -23,6 +23,11 @@ public class BeeBehaviourScript : MonoBehaviour
     private bool _cooldown = false;
 
     private Collision _colliding = null;
+
+    private void Awake()
+    {
+        
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -39,7 +44,7 @@ public class BeeBehaviourScript : MonoBehaviour
     
     private void FixedUpdate()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(_transform.position, DETECTION_RADIUS);
+        Collider[] hitColliders = Physics.OverlapSphere(_origin, DETECTION_RADIUS);
         bool playerDetected = false;
         for (int i = 0; i < hitColliders.Length; i++)
         {
@@ -57,11 +62,17 @@ public class BeeBehaviourScript : MonoBehaviour
         // Go back to the bee's origin
         if (!playerDetected)
         {
-            // Can be refactored into method
-            Vector3 direction = Vector3.Normalize(_origin - _transform.position);
+            if ((_origin - _transform.position).sqrMagnitude < 1)
+            {
+                _transform.position = _origin;
+            }
+            else
+            {
+                Vector3 direction = Vector3.Normalize(_origin - _transform.position);
             
-            _transform.rotation = Quaternion.LookRotation(direction);
-            _transform.position += direction * MOVEMENT_SPEED;
+                _transform.rotation = Quaternion.LookRotation(direction);
+                _transform.position += direction * MOVEMENT_SPEED;
+            }
         }
 
         if (_colliding != null && !_cooldown)

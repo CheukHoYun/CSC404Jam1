@@ -26,7 +26,6 @@ public class BeeBehaviourScript : MonoBehaviour
 
     private bool isPlayerCollider(Collider collider)
     {
-        // TODO: Change this to a check for the PC
         return collider.tag.Equals("Player");
     }
     

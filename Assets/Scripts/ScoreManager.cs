@@ -25,11 +25,11 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
     }
 
-    void AddPoint(){
+    public void AddPoint(){
         score += 1;
     }
 
-    void ResetPoint(){
+    public void ResetPoint(){
         score = 0;
     }
 }

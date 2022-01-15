@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ScoreManager;
 
 public class BeeBehaviourScript : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class BeeBehaviourScript : MonoBehaviour
 
     // TODO: Fiddle with speed
     private const float MOVEMENT_SPEED = 0.05f;
+
+    private const int PENALTY = 2;
     
     // private Rigidbody _rigidbody;
     
@@ -59,10 +62,10 @@ public class BeeBehaviourScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision);
         if (isPlayerCollider(collision.collider))
         {
             // TODO: Score deduction
+            ScoreManager.instance.RemovePoints(PENALTY);
             Destroy(this.gameObject);
         }
     }

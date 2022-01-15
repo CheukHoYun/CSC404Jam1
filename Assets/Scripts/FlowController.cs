@@ -31,7 +31,9 @@ public class FlowController : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown("escape")){
+            if(!game_ended){
             is_paused = !is_paused;
+            }
         }
 
         if(!game_ended){

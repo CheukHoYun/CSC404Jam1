@@ -27,7 +27,7 @@ public class BeeBehaviourScript : MonoBehaviour
     private bool isPlayerCollider(Collider collider)
     {
         // TODO: Change this to a check for the PC
-        return collider.name.Equals("Friend Cube");
+        return collider.tag.Equals("Player");
     }
     
     private void FixedUpdate()

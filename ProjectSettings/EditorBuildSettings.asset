@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/amusedART/Fantasy Bee/Scene/Bee Test Scene.unity
+    guid: 4090f4e0c1a6d9e4ba31b46c2f38ecd9
   m_configObjects: {}
